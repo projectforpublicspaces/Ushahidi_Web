@@ -7,3 +7,6 @@ application/cache/*
 media/uploads/*
 application/config/database.php
 tests/phpunit/phpunit.xml
+application/config/config.php
+application/config/pps.php
+themes/pps
