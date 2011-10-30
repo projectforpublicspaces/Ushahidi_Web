@@ -1,3 +1,7 @@
+PPS Branch
+==========
+This is a fork to hold the pps specific changes to the ushahidi 2.1-stable tag.
+
 Ushahidi Platform
 =================
 The Ushahidi Platform is an open source web application for information collection, vizualisation and interactive 
