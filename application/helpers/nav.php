@@ -25,6 +25,17 @@ class nav_Core {
 			$dontshow = array();
 		}
 		
+		// Reports Submit
+		if( ! in_array('reports_submit',$dontshow))
+		{
+			if (Kohana::config('settings.allow_reports'))
+			{
+				$menu .= "<li><span style=font-size:150%;><a href=\"".url::site()."reports/submit\" ";
+				$menu .= ($this_page == 'reports_submit') ? " class=\"active\"":"";
+			 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></span></li>";
+			}
+		}
+		
 		// Home
 		if( ! in_array('home',$dontshow))
 		{
@@ -41,24 +52,15 @@ class nav_Core {
 		 	$menu .= ">".Kohana::lang('ui_main.reports')."</a></li>";
 		 }
 		
-		// Reports Submit
-		if( ! in_array('reports_submit',$dontshow))
-		{
-			if (Kohana::config('settings.allow_reports'))
-			{
-				$menu .= "<li><a href=\"".url::site()."reports/submit\" ";
-				$menu .= ($this_page == 'reports_submit') ? " class=\"active\"":"";
-			 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></li>";
-			}
-		}
+		
 		
 		// Alerts
-		if( ! in_array('alerts',$dontshow))
+		/*if( ! in_array('alerts',$dontshow))
 		{
 			$menu .= "<li><a href=\"".url::site()."alerts\" ";
 			$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
 		 	$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
-		 }
+		 }*/
 		
 		// Contacts
 		if( ! in_array('contact',$dontshow))
