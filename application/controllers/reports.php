@@ -271,7 +271,7 @@ class Reports_Controller extends Main_Controller {
 			'person_last' => '',
 			'person_email' => '',
 			'form_id'	  => '',
-			'custom_field' => array()
+			'custom_field' => array(),
 		);
 		
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -303,6 +303,12 @@ class Reports_Controller extends Main_Controller {
 		
 		$this->template->content->forms = $forms;
 		
+                // fetch the likert scale data
+                $likert_questions = $db->query('SELECT id, question FROM likert_question ORDER BY ordernum');
+                $likert_responses = $db->query('SELECT id, response FROM likert_response ORDER BY ordernum');
+                $this->template->content->likert_questions = $likert_questions;
+                $this->template->content->likert_responses = $likert_responses;
+
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -341,6 +347,25 @@ class Reports_Controller extends Main_Controller {
 				//++ Do we need two events for this? Or will one suffice?
 				Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit', $post);
+
+                                // save likert scale responses
+                                $likert_user_responses = array();
+                                foreach ($post as $k => $v) {
+                                  if (strpos($k, 'likert_question_') === 0) {
+                                    $likert_question_id = intval(substr($k, strlen('likert_question_')));
+                                    $likert_response = intval($v);
+                                    $likert_user_responses[$likert_question_id] = $likert_response;
+                                  }
+                                }
+                                if (!empty($likert_user_responses)) {
+                                  foreach ($likert_user_responses as $question => $response) {
+                                    $likert_insert = array('incident_id' => $incident->id,
+                                                           'likert_question_id' => $question,
+                                                           'likert_response_id' => $response,
+                                                           );
+                                    $db->insert('likert_incident_response', $likert_insert);
+                                  }
+                                }
 
 				url::redirect('reports/thanks');
 			}
