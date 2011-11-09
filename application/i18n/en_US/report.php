@@ -34,7 +34,7 @@
 		'required' => 'The date field is required.',
 	),
 	'incident_description' => array(
-		'required' => 'The description field is required.',
+		'required' => '"So that people could" field is required.',
 	),
 	'incident_hour' => array(
 		'between' => 'The hour field does not appear to contain a valid hour?',
@@ -61,8 +61,8 @@
 		'length' => 'Please enter a valid value for Source Reliability',
 	),
 	'incident_title' => array(
-		'length' => 'The title field must be at least 3 and no more 200 characters long.',
-		'required' => 'The title field is required.',
+		'length' => '"My project idea is" field must be at least 3 and no more 200 characters long.',
+		'required' => '"My project idea is" field is required.',
 	),
 	'incident_verified' => array(
 		'between' => 'Please enter a valid value for Verify This Report',
@@ -83,8 +83,8 @@
 		'required' => 'The locale is required.',
 	),
 	'location_name' => array(
-		'length' => 'The location name field must be at least 3 and no more 200 characters long.',
-		'required' => 'The location name field is required.',
+		'length' => '"Where?" location name field must be at least 3 and no more 200 characters long.',
+		'required' => '"Where?" location name field is required.',
 	),
 	'longitude' => array(
 		'between' => 'The longitude field does not appear to contain a valid longitude?',
