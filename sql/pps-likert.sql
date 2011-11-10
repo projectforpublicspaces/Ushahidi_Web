@@ -3,13 +3,15 @@
 CREATE TABLE likert_response (
        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
        response VARCHAR(32) NOT NULL,
-       ordernum INT NOT NULL
+       ordernum INT NOT NULL,
+       KEY ordernum (ordernum)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE likert_question (
        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
        question VARCHAR(256) NOT NULL,
-       ordernum INT NOT NULL
+       ordernum INT NOT NULL,
+       KEY ordernum (ordernum)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE likert_incident_response (
