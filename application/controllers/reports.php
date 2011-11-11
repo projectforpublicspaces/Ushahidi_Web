@@ -272,6 +272,7 @@ class Reports_Controller extends Main_Controller {
 			'person_email' => '',
 			'form_id'	  => '',
 			'custom_field' => array(),
+                        'demographics_postnumber' => '',
 		);
 		
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -309,6 +310,9 @@ class Reports_Controller extends Main_Controller {
                 $this->template->content->likert_questions = $likert_questions;
                 $this->template->content->likert_responses = $likert_responses;
 
+                // fetch demographics data
+                $demographics_ages = $db->query('SELECT id, age_range FROM demographics_age ORDER by ordernum');
+                $this->template->content->demographics_ages = $demographics_ages;
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -365,6 +369,33 @@ class Reports_Controller extends Main_Controller {
                                                            );
                                     $db->insert('likert_incident_response', $likert_insert);
                                   }
+                                }
+
+                                // save demographics data
+                                $demographics_insert = array('incident_id' => $incident->id);
+                                $demographics_save = false;
+
+                                if (isset($post['demographics_age'])) {
+                                  $demographics_insert['age_id'] = intval($post['demographics_age']);
+                                  $demographics_save = true;
+                                }
+                                if (isset($post['demographics_gender'])) {
+                                  $gender = $post['demographics_gender'];
+                                  if ($gender === "male") {
+                                    $demographics_insert['male'] = 1;
+                                    $demographics_save = true;
+                                  } elseif ($gender === "female") {
+                                    $demographics_insert['male'] = 0;
+                                    $demographics_save = true;
+                                  }
+                                }
+                                if (isset($post['demographics_postnumber'])) {
+                                  $demographics_insert['postnumber'] = $post['demographics_postnumber'];
+                                  $demographics_save = true;
+                                }
+
+                                if ($demographics_save) {
+                                  $db->insert('demographics_incident', $demographics_insert);
                                 }
 
 				url::redirect('reports/thanks');
