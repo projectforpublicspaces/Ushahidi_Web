@@ -354,51 +354,11 @@ class Reports_Controller extends Main_Controller {
 				Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit', $post);
 
-                                // save likert scale responses
-                                $likert_user_responses = array();
-                                foreach ($post as $k => $v) {
-                                  if (strpos($k, 'likert_question_') === 0) {
-                                    $likert_question_id = intval(substr($k, strlen('likert_question_')));
-                                    $likert_response = intval($v);
-                                    $likert_user_responses[$likert_question_id] = $likert_response;
-                                  }
-                                }
-                                if (!empty($likert_user_responses)) {
-                                  foreach ($likert_user_responses as $question => $response) {
-                                    $likert_insert = array('incident_id' => $incident->id,
-                                                           'likert_question_id' => $question,
-                                                           'likert_response_id' => $response,
-                                                           );
-                                    $db->insert('likert_incident_response', $likert_insert);
-                                  }
-                                }
-
-                                // save demographics data
-                                $demographics_insert = array('incident_id' => $incident->id);
-                                $demographics_save = false;
-
-                                if (isset($post['demographics_age'])) {
-                                  $demographics_insert['age_id'] = intval($post['demographics_age']);
-                                  $demographics_save = true;
-                                }
-                                if (isset($post['demographics_gender'])) {
-                                  $gender = $post['demographics_gender'];
-                                  if ($gender === "male") {
-                                    $demographics_insert['male'] = 1;
-                                    $demographics_save = true;
-                                  } elseif ($gender === "female") {
-                                    $demographics_insert['male'] = 0;
-                                    $demographics_save = true;
-                                  }
-                                }
-                                if (isset($post['demographics_postnumber'])) {
-                                  $demographics_insert['postnumber'] = $post['demographics_postnumber'];
-                                  $demographics_save = true;
-                                }
-
-                                if ($demographics_save) {
-                                  $db->insert('demographics_incident', $demographics_insert);
-                                }
+                                reports::save_likert_scale_responses($post, $incident,
+                                                                     $likert_questions,
+                                                                     $likert_responses);
+                                reports::save_demographics($post, $incident,
+                                                           $demographics_ages);
 
 				url::redirect('reports/thanks');
 			}

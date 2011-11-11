@@ -835,5 +835,79 @@ class reports_Core {
 			return $all_incidents;
 		}
 	}	
+
+        public static function save_likert_scale_responses($post, $incident, $likert_questions, $likert_responses) {
+          $likert_user_responses = array();
+
+          $valid_responses = array();
+          foreach ($likert_responses as $r) {
+            $valid_responses[] = $r->id;
+          }
+
+          foreach ($likert_questions as $q) {
+            $qname = 'likert_question_' . $q->id;
+            if (isset($post[$qname])) {
+              $response = intval($post[$qname]);
+              if (in_array($response, $valid_responses)) {
+                $likert_user_responses[$q->id] = $response;
+              }
+            }
+          }
+
+          if (!empty($likert_user_responses)) {
+            $db = Database::instance();
+            // first remove all existing responses, which exist on edit
+            $db->delete('likert_incident_response',
+                        array('incident_id' => $incident->id));
+
+            foreach ($likert_user_responses as $question => $response) {
+              $likert_insert = array('incident_id' => $incident->id,
+                                     'likert_question_id' => $question,
+                                     'likert_response_id' => $response,
+                                     );
+              $db->insert('likert_incident_response', $likert_insert);
+            }
+          }
+        }
+
+        public static function save_demographics($post, $incident, $demographics_ages) {
+          $demographics_insert = array('incident_id' => $incident->id);
+          $demographics_save = false;
+
+          $valid_ages = array();
+          foreach ($demographics_ages as $a) {
+            $valid_ages[] = $a->id;
+          }
+
+          if (isset($post['demographics_age'])) {
+            $age = intval($post['demographics_age']);
+            if (in_array($age, $valid_ages)) {
+              $demographics_insert['age_id'] = $age;
+              $demographics_save = true;
+            }
+          }
+          if (isset($post['demographics_gender'])) {
+            $gender = $post['demographics_gender'];
+            if ($gender === "male") {
+              $demographics_insert['male'] = 1;
+              $demographics_save = true;
+            } elseif ($gender === "female") {
+              $demographics_insert['male'] = 0;
+              $demographics_save = true;
+            }
+          }
+          if (isset($post['demographics_postnumber'])) {
+            $demographics_insert['postnumber'] = $post['demographics_postnumber'];
+            $demographics_save = true;
+          }
+
+          if ($demographics_save) {
+            $db = Database::instance();
+            $db->delete('demographics_incident',
+                        array('incident_id' => $incident->id));
+            $db->insert('demographics_incident', $demographics_insert);
+          }
+        }
+
 }
 ?>
