@@ -270,6 +270,8 @@ class Reports_Controller extends Main_Controller {
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
+                        'person_connect_link' => '',
+                        'person_neighborhood' => '',
 			'form_id'	  => '',
 			'custom_field' => array(),
                         'demographics_postnumber' => '',

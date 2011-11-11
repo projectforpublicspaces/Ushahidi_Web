@@ -547,6 +547,8 @@ class reports_Core {
 		$person->person_last = $post->person_last;
 		$person->person_email = $post->person_email;
 		$person->person_date = date("Y-m-d H:i:s",time());
+                $person->person_connect_link = $post->person_connect_link;
+                $person->person_neighborhood = $post->person_neighborhood;
 		$person->save();		
 	}
 	
