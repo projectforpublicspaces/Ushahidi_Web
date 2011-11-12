@@ -193,6 +193,30 @@
 							</div>
 							
 						<?php echo $custom_forms; ?>
+<div class="row">
+<h4>Rating Assessment</h4>
+<?php echo reports::likert_questions($likert_questions, $likert_responses, $form); ?>
+</div>
+<div class="report_row">
+<h4>Age</h4>
+<?php
+foreach ($demographics_ages as $age) {
+echo reports::demographics_age_radio($age, $form) . '<br />';
+}
+?>
+</div>
+<div class="row">
+<h4>Gender</h4>
+<?php echo reports::radio_button('demographics_gender', 'male', $form); ?>
+Male <br />
+<?php echo reports::radio_button('demographics_gender', 'female', $form); ?>
+Female <br />
+</div>
+<div class="report_row">
+<h4>Post Number</h4>
+<?php echo form::input('demographics_postnumber', $form['demographics_postnumber'], 'class="text long"'); ?>
+</div>
+</div>
 						</div>
 						<!-- f-col-1 -->
 						<div class="f-col-1">
@@ -438,6 +462,18 @@
 										<?php print form::input('person_email', $form['person_email'], ' class="text"'); ?>
 									</label>
 								</div>
+                                                                                <div class="row">
+                                                                  <label>
+                                                                  <span>Link for people to connect w/ you online (personal blog, twitter, etc.)</span>
+                                                                    <?php echo form::input('person_connect_link', $form['person_connect_link'], ' class="text"'); ?>
+                                                                  </label>
+                                                                    </div>
+                                                                                <div class="row">
+                                                                  <label>
+                                                                  <span>Neighborhood</span>
+                                                                    <?php echo form::input('person_neighborhood', $form['person_neighborhood'], ' class="text"'); ?>
+                                                                  </label>
+                                                                    </div>
 							</div>
 							<!-- f-col-bottom-1 -->
 							<div class="f-col-bottom-1">

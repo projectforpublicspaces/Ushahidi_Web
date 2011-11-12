@@ -909,5 +909,47 @@ class reports_Core {
           }
         }
 
+        // these functions are used to reuse display code
+        function radio_button($name, $value, $form) {
+          $checked = isset($form[$name]) && $form[$name] == $value;
+          return form::radio($name, $value, $checked);
+        }
+
+        function likert_radio_group($name, $responses, $form) {
+          $group = array();
+          foreach ($responses as $response) {
+            $value = $response->id;
+            $group[] = reports::radio_button($name,  $value, $form) . $response->response . '<br />';
+          }
+          return implode('', $group);
+        }
+
+        function likert_question($question_label, $question_form_name, $responses, $form) {
+          return '<li>' .
+            '<p>' . $question_label . '</p>' .
+            reports::likert_radio_group($question_form_name, $responses, $form) .
+            '</li>';
+        }
+
+        function likert_questions($questions, $responses, $form) {
+          // function that displays all likert questions
+          $markup = array();
+          $markup[] = '<ol>';
+          foreach ($questions as $question) {
+            $label = $question->question;
+            $name = 'likert_question_' . $question->id;
+            $markup[] = reports::likert_question($label, $name, $responses, $form);
+          }
+          $markup[] = '</ol>';
+          return implode('', $markup);
+        }
+
+        function demographics_age_radio($age, $form) {
+          $name = 'demographics_age';
+          $value = $age->id;
+          $label = $age->age_range;
+          return reports::radio_button($name, $value, $form) . $label;
+        }
+
 }
 ?>

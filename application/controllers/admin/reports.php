@@ -376,12 +376,17 @@ class Reports_Controller extends Admin_Controller
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
+                        'person_neighborhood' => '',
+                        'person_connect_link' => '',
 			'custom_field' => array(),
 			'incident_active' => '',
 			'incident_verified' => '',
 			'incident_source' => '',
 			'incident_information' => '',
-			'incident_zoom' => ''
+			'incident_zoom' => '',
+                        'demographics_postnumber' => '',
+                        'demographics_gender' => '',
+                        'demographics_age' => '',
 		);
 
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -552,6 +557,16 @@ class Reports_Controller extends Admin_Controller
 			}
 		}
 
+                // fetch the likert scale data
+                $likert_questions = $db->query('SELECT id, question FROM likert_question ORDER BY ordernum');
+                $likert_responses = $db->query('SELECT id, response FROM likert_response ORDER BY ordernum');
+                $this->template->content->likert_questions = $likert_questions;
+                $this->template->content->likert_responses = $likert_responses;
+
+                // fetch demographics data
+                $demographics_ages = $db->query('SELECT id, age_range FROM demographics_age ORDER by ordernum');
+                $this->template->content->demographics_ages = $demographics_ages;
+
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
@@ -649,6 +664,12 @@ class Reports_Controller extends Admin_Controller
 
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				reports::save_custom_fields($post, $incident);
+
+                                reports::save_likert_scale_responses($post, $incident,
+                                                                     $likert_questions,
+                                                                     $likert_responses);
+                                reports::save_demographics($post, $incident,
+                                                           $demographics_ages);
 
 				// Action::report_edit - Edited a Report
 				Event::run('ushahidi_action.report_edit', $incident);
@@ -754,6 +775,8 @@ class Reports_Controller extends Admin_Controller
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
+                                                'person_neighborhood' => $incident->incident_person->person_neighborhood,
+                                                'person_connect_link' => $incident->incident_person->person_connect_link,
 						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,true),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
@@ -762,9 +785,42 @@ class Reports_Controller extends Admin_Controller
 						'incident_zoom' => $incident->incident_zoom
 					);
 
-					// Merge To Form Array For Display
-					$form = arr::overwrite($form, $incident_arr);
+                // Merge To Form Array For Display
+                $form = arr::overwrite($form, $incident_arr);
+
+                // fetch existing likert choices for incident
+                $likert_answer_map = array();
+                $likert_answers = $db->query('SELECT id, likert_question_id, likert_response_id FROM likert_incident_response WHERE incident_id=' . $incident->id);
+                foreach ($likert_answers as $a) {
+                  $likert_answer_map[$a->likert_question_id] = $a->likert_response_id;
+                }
+                                        
+                // populate the $form variable with the likert scale answers
+                foreach ($likert_questions as $q) {
+                  $name = 'likert_question_' . $q->id;
+                  $form[$name] = (isset($likert_answer_map[$q->id])
+                                  ? $likert_answer_map[$q->id]
+                                  : '');
+                }
+
+                // and popuplate $form with demographics info
+                $demographics_answers = $db->query('SELECT id, age_id, male, postnumber FROM demographics_incident WHERE incident_id=' . $incident->id);
+                if (count($demographics_answers) > 0) {
+                  $dem = $demographics_answers[0];
+                  $age = intval($dem->age_id);
+                  if ($age > 0) {
+                    $form['demographics_age'] = $age;
+                  }
+                  if ($dem->male === "0" || $dem->male === "1") {
+                    $form['demographics_gender'] = ($dem->male == 1 ? "male" : "female");
+                  }
+                  if ($dem->postnumber) {
+                    $form['demographics_postnumber'] = $dem->postnumber;
+                  }
+                }
+
 				}
+
 				else
 				{
 					// Redirect
@@ -779,7 +835,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		
+
 		// Retrieve Custom Form Fields Structure
 		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
 		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE, "view");

@@ -275,6 +275,8 @@ class Reports_Controller extends Main_Controller {
 			'form_id'	  => '',
 			'custom_field' => array(),
                         'demographics_postnumber' => '',
+                        'demographics_gender' => '',
+                        'demographics_age' => '',
 		);
 		
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -315,6 +317,12 @@ class Reports_Controller extends Main_Controller {
                 // fetch demographics data
                 $demographics_ages = $db->query('SELECT id, age_range FROM demographics_age ORDER by ordernum');
                 $this->template->content->demographics_ages = $demographics_ages;
+
+                // populate the $form variable with the likert questions
+                foreach ($likert_questions as $q) {
+                  $name = 'likert_question_' . $q->id;
+                  $form[$name] = '';
+                }
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
