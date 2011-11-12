@@ -836,6 +836,14 @@ class reports_Core {
 		}
 	}	
 
+        public static function fetch_likert_scale_questions() {
+          return Database::instance()->query('SELECT id, question FROM likert_question ORDER BY ordernum');
+        }
+
+        public static function fetch_likert_scale_responses() {
+          return Database::instance()->query('SELECT id, response FROM likert_response ORDER BY ordernum');
+        }
+
         public static function save_likert_scale_responses($post, $incident, $likert_questions, $likert_responses) {
           $likert_user_responses = array();
 

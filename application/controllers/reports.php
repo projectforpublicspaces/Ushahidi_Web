@@ -309,8 +309,8 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->forms = $forms;
 		
                 // fetch the likert scale data
-                $likert_questions = $db->query('SELECT id, question FROM likert_question ORDER BY ordernum');
-                $likert_responses = $db->query('SELECT id, response FROM likert_response ORDER BY ordernum');
+                $likert_questions = reports::fetch_likert_scale_questions();
+                $likert_responses = reports::fetch_likert_scale_responses();
                 $this->template->content->likert_questions = $likert_questions;
                 $this->template->content->likert_responses = $likert_responses;
 
