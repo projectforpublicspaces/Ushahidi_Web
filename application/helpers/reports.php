@@ -927,28 +927,34 @@ class reports_Core {
           $group = array();
           foreach ($responses as $response) {
             $value = $response->id;
-            $group[] = reports::radio_button($name,  $value, $form) . $response->response . '<br />';
+            $group[] = '<td>';
+            $group[] = reports::radio_button($name,  $value, $form);
+            $group[] = '</td>';
           }
           return implode('', $group);
         }
 
         function likert_question($question_label, $question_form_name, $responses, $form) {
-          return '<li>' .
-            '<p>' . $question_label . '</p>' .
+          return '<tr>' .
+            '<td>' . $question_label . '</td>' .
             reports::likert_radio_group($question_form_name, $responses, $form) .
-            '</li>';
+            '</tr>';
         }
 
         function likert_questions($questions, $responses, $form) {
           // function that displays all likert questions
           $markup = array();
-          $markup[] = '<ol>';
+          $markup[] = '<table class="likert-questions"><thead><tr><th>&nbsp;</th>';
+          foreach ($responses as $r) {
+            $markup[] = '<th>' . $r->response . '</th>';
+          }
+          $markup[] = '</tr></thead><tbody>';
           foreach ($questions as $question) {
             $label = $question->question;
             $name = 'likert_question_' . $question->id;
             $markup[] = reports::likert_question($label, $name, $responses, $form);
           }
-          $markup[] = '</ol>';
+          $markup[] = '</tbody></table>';
           return implode('', $markup);
         }
 
