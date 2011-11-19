@@ -361,10 +361,13 @@ class Incident_Model extends ORM {
 			$having_clause = "HAVING distance <= ".intval($radius['distance'])." ";
 		}
 
+                $sort_on_comments = !empty($order_field) && $order_field == 'comments';
+
 		$sql .=  'FROM '.$table_prefix.'incident i '
 			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
 			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
+                  . ($sort_on_comments ? ' LEFT JOIN comment cm ON i.id = cm.incident_id ' : '')
 			. 'WHERE i.incident_active = 1 ';
 			// . 'AND c.category_visible = 1 ';
 
@@ -377,11 +380,18 @@ class Incident_Model extends ORM {
 			}
 		}
 
+                if ($sort_on_comments) {
+                  $sql .= ' GROUP BY i.id ';
+                }
+
 		// Add the having clause
 		$sql .= $having_clause;
 
 		// Check for the order field and sort parameters
-		if ( ! empty($order_field) AND ! empty($sort) AND (strtoupper($sort) == 'ASC' OR strtoupper($sort) == 'DESC'))
+                if ($sort_on_comments) {
+                  $sql .= 'ORDER BY count(cm.incident_id) DESC ';
+                }
+		elseif ( ! empty($order_field) AND ! empty($sort) AND (strtoupper($sort) == 'ASC' OR strtoupper($sort) == 'DESC'))
 		{
 			$sql .= 'ORDER BY '.$order_field.' '.$sort.' ';
 		}

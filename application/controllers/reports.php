@@ -120,7 +120,15 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->percent_verified = $percent_verified;
 		$this->template->content->services = Service_Model::get_array();
 
+                $selected_categories = array();
+                if (isset($_GET['c'])) {
+                  $selected_categories = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
+                }
+                $this->template->content->selected_categories = $selected_categories;
+                $this->template->content->all_categories = ORM::factory('category')->find_all();
+
 		$this->template->header->header_block = $this->themes->header_block();
+
 	}
 	
 	/**
@@ -148,8 +156,11 @@ class Reports_Controller extends Main_Controller {
 				'total_items' => $all_incidents->count()
 				));
 
-		// Reports
-		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
+                if (isset($_GET['sort']) && $_GET['sort'] == 'comments') {
+                  $incidents = Incident_Model::get_incidents(reports::$params, $pagination, 'comments');
+                } else {
+                  $incidents = Incident_Model::get_incidents(reports::$params, $pagination);
+                }
 		
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 		$localized_categories = array();
@@ -208,7 +219,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			$report_listing->stats_breadcrumb = '('.$pagination->total_items.' report'.$plural.')';
 		}
-		
+
 		// Return
 		return $report_listing;
 	}
