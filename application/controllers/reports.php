@@ -125,7 +125,9 @@ class Reports_Controller extends Main_Controller {
                   $selected_categories = is_array($_GET['c']) ? $_GET['c'] : array($_GET['c']);
                 }
                 $this->template->content->selected_categories = $selected_categories;
-                $this->template->content->all_categories = ORM::factory('category')->find_all();
+                $this->template->content->all_categories = ORM::factory('category')
+                  ->where('category_visible', 1)
+                  ->find_all();
 
 		$this->template->header->header_block = $this->themes->header_block();
 
