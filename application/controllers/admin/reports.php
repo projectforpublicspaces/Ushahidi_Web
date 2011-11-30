@@ -384,7 +384,7 @@ class Reports_Controller extends Admin_Controller
 			'incident_source' => '',
 			'incident_information' => '',
 			'incident_zoom' => '',
-                        'demographics_postnumber' => '',
+                        'demographics_district' => '',
                         'demographics_gender' => '',
                         'demographics_age' => '',
 		);
@@ -567,6 +567,10 @@ class Reports_Controller extends Admin_Controller
                 $demographics_ages = $db->query('SELECT id, age_range FROM demographics_age ORDER by ordernum');
                 $this->template->content->demographics_ages = $demographics_ages;
 
+                // fetch demographics districts
+                $demographics_districts = $db->query('SELECT id, district FROM demographics_district ORDER BY ordernum');
+                $this->template->content->demographics_districts = $demographics_districts;
+
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
@@ -669,7 +673,8 @@ class Reports_Controller extends Admin_Controller
                                                                      $likert_questions,
                                                                      $likert_responses);
                                 reports::save_demographics($post, $incident,
-                                                           $demographics_ages);
+                                                           $demographics_ages,
+                                                           $demographics_districts);
 
 				// Action::report_edit - Edited a Report
 				Event::run('ushahidi_action.report_edit', $incident);
@@ -804,18 +809,19 @@ class Reports_Controller extends Admin_Controller
                 }
 
                 // and popuplate $form with demographics info
-                $demographics_answers = $db->query('SELECT id, age_id, male, postnumber FROM demographics_incident WHERE incident_id=' . $incident->id);
+                $demographics_answers = $db->query('SELECT id, age_id, male, district_id FROM demographics_incident WHERE incident_id=' . $incident->id);
                 if (count($demographics_answers) > 0) {
                   $dem = $demographics_answers[0];
                   $age = intval($dem->age_id);
+                  $district = intval($dem->district_id);
                   if ($age > 0) {
                     $form['demographics_age'] = $age;
                   }
                   if ($dem->male === "0" || $dem->male === "1") {
                     $form['demographics_gender'] = ($dem->male == 1 ? "male" : "female");
                   }
-                  if ($dem->postnumber) {
-                    $form['demographics_postnumber'] = $dem->postnumber;
+                  if ($district > 0) {
+                    $form['demographics_district'] = $district;
                   }
                 }
 

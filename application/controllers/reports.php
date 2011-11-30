@@ -287,7 +287,7 @@ class Reports_Controller extends Main_Controller {
                         'person_neighborhood' => '',
 			'form_id'	  => '',
 			'custom_field' => array(),
-                        'demographics_postnumber' => '',
+                        'demographics_district' => '',
                         'demographics_gender' => '',
                         'demographics_age' => '',
 		);
@@ -330,6 +330,10 @@ class Reports_Controller extends Main_Controller {
                 // fetch demographics data
                 $demographics_ages = $db->query('SELECT id, age_range FROM demographics_age ORDER by ordernum');
                 $this->template->content->demographics_ages = $demographics_ages;
+
+                // fetch demographics districts
+                $demographics_districts = $db->query('SELECT id, district FROM demographics_district ORDER by ordernum');
+                $this->template->content->demographics_districts = $demographics_districts;
 
                 // populate the $form variable with the likert questions
                 foreach ($likert_questions as $q) {
@@ -379,7 +383,8 @@ class Reports_Controller extends Main_Controller {
                                                                      $likert_questions,
                                                                      $likert_responses);
                                 reports::save_demographics($post, $incident,
-                                                           $demographics_ages);
+                                                           $demographics_ages,
+                                                           $demographics_districts);
 
 				url::redirect('reports/thanks');
 			}

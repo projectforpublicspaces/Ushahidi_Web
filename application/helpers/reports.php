@@ -878,13 +878,18 @@ class reports_Core {
           }
         }
 
-        public static function save_demographics($post, $incident, $demographics_ages) {
+        public static function save_demographics($post, $incident, $demographics_ages, $demographics_districts) {
           $demographics_insert = array('incident_id' => $incident->id);
           $demographics_save = false;
 
           $valid_ages = array();
           foreach ($demographics_ages as $a) {
             $valid_ages[] = $a->id;
+          }
+
+          $valid_districts = array();
+          foreach ($demographics_districts as $d) {
+            $valid_districts[] = $d->id;
           }
 
           if (isset($post['demographics_age'])) {
@@ -904,9 +909,12 @@ class reports_Core {
               $demographics_save = true;
             }
           }
-          if (isset($post['demographics_postnumber'])) {
-            $demographics_insert['postnumber'] = $post['demographics_postnumber'];
-            $demographics_save = true;
+          if (isset($post['demographics_district'])) {
+            $district = intval($post['demographics_district']);
+            if (in_array($district, $valid_districts)) {
+              $demographics_insert['district_id'] = $district;
+              $demographics_save = true;
+            }
           }
 
           if ($demographics_save) {
@@ -918,6 +926,23 @@ class reports_Core {
         }
 
         // these functions are used to reuse display code
+        function district_dropdown($name, $district_options, $form) {
+          $selected = NULL;
+          if (isset($form[$name]) && $form[$name]) {
+            $formvalue = $form[$name];
+            foreach ($district_options as $value => $display) {
+              if ($formvalue == $value) {
+                $selected = $value;
+              }
+            }
+          }
+          $options = array();
+          foreach ($district_options as $opt) {
+            $options[$opt->id] = $opt->district;
+          }
+          return form::dropdown($name, $options, $selected);
+        }
+
         function radio_button($name, $value, $form) {
           $checked = isset($form[$name]) && $form[$name] == $value;
           return form::radio($name, $value, $checked);

@@ -7,15 +7,22 @@ CREATE TABLE demographics_age (
        KEY ordernum (ordernum)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE demographics_district (
+       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+       district VARCHAR(64) NOT NULL,
+       ordernum INT NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE demographics_incident (
        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
        incident_id INT NOT NULL,
        age_id INT,
        male BOOLEAN,
-       postnumber VARCHAR(255),
+       district_id INT,
        KEY incident_id (incident_id),
        KEY age_id (age_id),
-       KEY male (male)
+       KEY male (male),
+       KEY district_id (district_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO demographics_age (id, age_range, ordernum) VALUES
@@ -24,3 +31,15 @@ INSERT INTO demographics_age (id, age_range, ordernum) VALUES
 (3, '19-40', 30),
 (4, '41-60', 40),
 (5, '60-', 50);
+
+INSERT INTO demographics_district (id, district, ordernum) VALUES
+(1, 'Majorna-Linné', 10),
+(2, 'Askim-Frölunda-Högsbo', 20),
+(3, 'VästraGöteborg', 30),
+(4, 'VästraHisingen', 40),
+(5, 'NorraHisingen', 50),
+(6, 'Angered', 60),
+(7, 'ÖstraGöteborg', 70),
+(8, 'Örgryte-Härlanda', 80),
+(9, 'Centrum', 90),
+(10, 'Lundby', 100);
