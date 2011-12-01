@@ -961,7 +961,7 @@ class reports_Core {
 
         function likert_question($question_label, $question_form_name, $responses, $form) {
           return '<tr>' .
-            '<td>' . $question_label . '</td>' .
+            '<td class="question">' . $question_label . '</td>' .
             reports::likert_radio_group($question_form_name, $responses, $form) .
             '</tr>';
         }
@@ -969,11 +969,8 @@ class reports_Core {
         function likert_questions($questions, $responses, $form) {
           // function that displays all likert questions
           $markup = array();
-          $markup[] = '<table class="likert-questions"><thead><tr><th>&nbsp;</th>';
-          foreach ($responses as $r) {
-            $markup[] = '<th>' . $r->response . '</th>';
-          }
-          $markup[] = '</tr></thead><tbody>';
+          $markup[] = '<table class="likert-questions">';
+          $markup[] = '<tbody>';
           foreach ($questions as $question) {
             $label = $question->question;
             $name = 'likert_question_' . $question->id;
