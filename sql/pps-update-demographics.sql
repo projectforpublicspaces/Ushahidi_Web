@@ -21,4 +21,5 @@ INSERT INTO demographics_district (id, district, ordernum) VALUES
 (7, 'ÖstraGöteborg', 70),
 (8, 'Örgryte-Härlanda', 80),
 (9, 'Centrum', 90),
-(10, 'Lundby', 100);
+(10, 'Lundby', 100),
+(11, 'övrig del av Sverige', 110);
