@@ -1,5 +1,7 @@
 -- create tables for demographic questions
 
+SET NAMES utf8;
+
 CREATE TABLE demographics_age (
        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
        age_range VARCHAR(16),

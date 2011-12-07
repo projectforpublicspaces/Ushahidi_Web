@@ -1,6 +1,8 @@
 -- update demographics table - assumes that pps-demographics.sql has
 -- been run without containing district table
 
+SET NAMES utf8;
+
 CREATE TABLE demographics_district (
        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
        district VARCHAR(64) NOT NULL,
