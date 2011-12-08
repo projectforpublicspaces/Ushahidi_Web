@@ -762,6 +762,10 @@ class Reports_Controller extends Main_Controller {
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
 
+                // add in person information
+                $incident_person = ORM::factory('incident_person')->where('incident_id', $incident->id)->find();
+                $this->template->content->incident_person = ($incident_person->loaded == true) ? $incident_person : NULL;
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
