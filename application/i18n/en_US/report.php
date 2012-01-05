@@ -26,7 +26,7 @@
 	),
 	'incident_category' => array(
 		'numeric' => 'The category field does not appear to contain a valid category?',
-		'required' => 'The category field is required.',
+		'required' => '"Betygsätt platsen" fältet är nödvändigt att fylla i.',
 	),
 	'incident_date' => array(
 		'date_ddmmyyyy' => 'The date field does not appear to contain a valid date?',
@@ -34,7 +34,7 @@
 		'required' => 'The date field is required.',
 	),
 	'incident_description' => array(
-		'required' => '"So that people could" field is required.',
+		'required' => '"...förklara varför" fältet är nödvändigt att fylla i.',
 	),
 	'incident_hour' => array(
 		'between' => 'The hour field does not appear to contain a valid hour?',
@@ -49,7 +49,7 @@
 		'required' => 'The minute field is required.',
 	),
 	'incident_news' => array(
-		'url' => 'The news source links field does not appear to contain a valid URL?',
+		'url' => 'Fältet för nyhetskälla verkar inte innehålla en giltig webadress.',
 	),
 	'incident_photo' => array(
 		'size' => 'Please ensure that photo uploads sizes are limited to 2MB.',
@@ -61,15 +61,15 @@
 		'length' => 'Please enter a valid value for Source Reliability',
 	),
 	'incident_title' => array(
-		'length' => '"My project idea is" field must be at least 3 and no more 200 characters long.',
-		'required' => '"My project idea is" field is required.',
+		'length' => '"Mitt förslag för att förbättra platsen är" måste vara mellan 3-200 tecken.',
+		'required' => '"Mitt förslag för att förbättra platsen är" fältet är nödvändigt att fylla i.',
 	),
 	'incident_verified' => array(
 		'between' => 'Please enter a valid value for Verify This Report',
 		'required' => 'Please enter a valid value for Verify This Report',
 	),
 	'incident_video' => array(
-		'url' => 'The video links field does not appear to contain a valid URL?',
+		'url' => 'Videolänkfältet verkar inte innehålla en giltig webadress.',
 	),
 	'latitude' => array(
 		'between' => 'The latitude field does not appear to contain a valid latitude?',
@@ -83,15 +83,15 @@
 		'required' => 'The locale is required.',
 	),
 	'location_name' => array(
-		'length' => '"Where?" location name field must be at least 3 and no more 200 characters long.',
-		'required' => '"Where?" location name field is required.',
+		'length' => '"Namnge platsen" platsnamn måste vara mellan 3-200 tecken.',
+		'required' => '"Namnge platsen" platsnamn är nödvändigt att fylla i.',
 	),
 	'longitude' => array(
 		'between' => 'The longitude field does not appear to contain a valid longitude?',
 		'required' => 'The longitude field is required. Please click on the map to pinpoint a location.',
 	),
 	'person_email' => array(
-		'email' => 'The email field does not appear to contain a valid email address?',
+		'email' => 'E-postfältet verkar inte innehålla en giltig e-postadress',
 		'length' => 'The email field must be at least 4 and no more 64 characters long.',
 	),
 	'person_first' => array(

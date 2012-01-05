@@ -1,8 +1,8 @@
 <?php
 	$lang = array(
 	'captcha' => array(
-		'default' => 'Please enter a valid security code',
-		'required' => 'Please enter the security code',
+		'default' => 'Ange en giltig säkerhetskod',
+		'required' => 'Din säkerhetskod',
 	),
 	'comment_author' => array(
 		'length' => 'The name field must be at least 3 characters long.',

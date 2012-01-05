@@ -187,19 +187,19 @@
 				},
 				messages: {
 					comment_author: {
-						required: "Please enter your Name",
-						minlength: "Your Name must consist of at least 3 characters"
+						required: "Ditt namn",
+						minlength: "Ditt namn måste bestå av minst 3 tecken"
 					},
 					comment_email: {
-						required: "Please enter an Email Address",
-						email: "Please enter a valid Email Address"
+						required: "Din e-postadress",
+						email: "Ange en giltig e-postadress"
 					},
 					comment_description: {
-						required: "Please enter a Comment",
-						minlength: "Your Comment must be at least 3 characters long"
+						required: "Din kommentar",
+						minlength: "Din kommentar måste bestå av minst 3 tecken"
 					},
 					captcha: {
-						required: "Please enter the Security Code"
+						required: "Din säkerhetskod"
 					}
 				}
 			});
