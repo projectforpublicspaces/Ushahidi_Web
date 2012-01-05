@@ -987,5 +987,26 @@ class reports_Core {
           return reports::radio_button($name, $value, $form) . $label;
         }
 
+        function translate_date($date_string) {
+          $mapping = array(
+            'Jan' => 'jan.',
+            'Feb' => 'febr.',
+            'Mar' => 'mars',
+            'Apr' => 'april',
+            'May' => 'maj',
+            'Jun' => 'juni',
+            'Jul' => 'juli',
+            'Aug' => 'aug.',
+            'Sep' => 'sept.',
+            'Oct' => 'okt.',
+            'Nov' => 'nov.',
+            'Dec' => 'dec.',
+            );
+          $result = $date_string;
+          foreach ($mapping as $month => $translation) {
+            $result = str_replace($month, $translation, $result);
+          }
+          return $result;
+        }
 }
 ?>
