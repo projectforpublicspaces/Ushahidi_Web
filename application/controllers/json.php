@@ -271,7 +271,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"type\":\"Feature\",";
 			$json_item .= "\"properties\": {";
 			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base()
-				 . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>")) . "\",";
+				 . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Rapporter</a>")) . "\",";
 			$json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter."\", ";
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
@@ -696,7 +696,7 @@ class Json_Controller extends Template_Controller
 					$json_item = "{";
 					$json_item .= "\"type\":\"Feature\",";
 					$json_item .= "\"properties\": {";
-					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>")) . "\",";
+					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Rapporter</a>")) . "\",";
 					$json_item .= "\"link\": \"http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast."\", ";		  
 					$json_item .= "\"category\":[0], ";
 					$json_item .= "\"icon\": \"\", ";
