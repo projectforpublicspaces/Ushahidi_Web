@@ -185,8 +185,9 @@
 		// 	Events for toggling the report filters
 		addToggleReportsFilterEvents();
 		
+                // XXX this isn't working properly, so commented out for now
 		// Attach paging events to the paginator
-		attachPagingEvents();
+		//attachPagingEvents();
 		
 		// Attach the "Filter Reports" action
 		attachFilterReportsAction();
