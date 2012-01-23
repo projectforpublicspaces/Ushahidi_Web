@@ -39,8 +39,13 @@ class reports_Core {
 		$post = Validation::factory($post)
 				->pre_filter('trim', TRUE);
 		
-		$post->add_rules('incident_title','required', 'length[3,200]');
-		$post->add_rules('incident_description','required');
+
+                if (!empty($post->incident_title)) {
+                  $post->add_rules('incident_description', 'required');
+                }
+
+		//$post->add_rules('incident_title','required', 'length[3,200]');
+		//$post->add_rules('incident_description','required');
 		$post->add_rules('incident_date','required','date_mmddyyyy');
 		$post->add_rules('incident_hour','required','between[1,12]');
 		$post->add_rules('incident_minute','required','between[0,59]');
