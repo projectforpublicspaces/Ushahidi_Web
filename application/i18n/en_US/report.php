@@ -104,5 +104,30 @@
 		'date_mmddyyyy' => 'The TO date field does not appear to contain a valid date?',
 		'range' => 'Please enter a valid TO date. It cannot be greater than today.',
 		'range_greater' => 'Your FROM date cannot be greater than your TO date.',
-	));
+                           ),
+        'demographics_age' => array(
+            'required' => 'Age required.'
+        ),
+        'demographics_gender' => array(
+            'required' => 'Gender required.'
+        ),
+        'demographics_district' => array(
+            'required' => 'District required.'
+        ),
+        'likert_question_1' => array(
+            'required' => 'Likert question 1 required.'
+        ),
+        'likert_question_2' => array(
+            'required' => 'Likert question 2 required.'
+        ),
+        'likert_question_3' => array(
+            'required' => 'Likert question 3 required.'
+        ),
+        'likert_question_4' => array(
+            'required' => 'Likert question 4 required.'
+        ),
+        'likert_question_5' => array(
+            'required' => 'Likert question 5 required'
+        ),
+);
 ?>

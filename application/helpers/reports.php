@@ -128,6 +128,29 @@ class reports_Core {
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			$post->add_rules('incident_zoom', 'numeric');
 		}
+
+                // make necessary customizations required
+                $questions = self::fetch_likert_scale_questions();
+                foreach ($questions as $q) {
+                  $k = 'likert_question_' . $q->id;
+                  if (!isset($post->$k)) {
+                    $post->$k = '';
+                    $post->add_error($k, 'required');
+                  }
+                }
+
+                if (!isset($post->demographics_age)) {
+                  $post->demographics_age = '';
+                  $post->add_error('demographics_age', 'required');
+                }
+                if (!isset($post->demographics_gender)) {
+                  $post->demographics_gender = '';
+                  $post->add_error('demographics_gender', 'required');
+                }
+                if (!isset($post->demographics_district)) {
+                  $post->demographics_district = '';
+                  $post->add_error('demographics_district', 'required');
+                }
 		
 		// Custom form fields validation
 		$errors = customforms::validate_custom_form_fields($post);
