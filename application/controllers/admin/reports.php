@@ -387,7 +387,15 @@ class Reports_Controller extends Admin_Controller
                         'demographics_district' => '',
                         'demographics_gender' => '',
                         'demographics_age' => '',
+                        'pinmoved' => '',
 		);
+
+                $likert_questions = reports::fetch_likert_scale_questions();
+                foreach ($likert_questions as $q) {
+                  $k = 'likert_question_' . $q->id;
+                  $form[$k] = '';
+                }
+
 
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
@@ -558,7 +566,6 @@ class Reports_Controller extends Admin_Controller
 		}
 
                 // fetch the likert scale data
-                $likert_questions = reports::fetch_likert_scale_questions();
                 $likert_responses = reports::fetch_likert_scale_responses();
                 $this->template->content->likert_questions = $likert_questions;
                 $this->template->content->likert_responses = $likert_responses;

@@ -756,6 +756,9 @@
 
 		/* Featrue stopped moving */
 		function endDrag(feature, pixel) {
+                  // used to enforce validation of pin move
+                  $('#pinmoved').val('1');
+
 		    for (f in selectedFeatures) {
 		        f.state = OpenLayers.State.UPDATE;
 		    }

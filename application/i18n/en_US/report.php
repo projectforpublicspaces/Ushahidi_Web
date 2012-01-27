@@ -129,5 +129,8 @@
         'likert_question_5' => array(
             'required' => 'Likert question 5 required'
         ),
+        'pinmoved' => array(
+            'default' => 'Please select a location by dragging the pin on the map.',
+        ),
 );
 ?>

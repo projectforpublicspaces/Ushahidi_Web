@@ -151,6 +151,10 @@ class reports_Core {
                   $post->demographics_district = '';
                   $post->add_error('demographics_district', 'required');
                 }
+
+                if (isset($post->pinmoved) && $post->pinmoved != '1') {
+                  $post->add_error('pinmoved', 'required');
+                }
 		
 		// Custom form fields validation
 		$errors = customforms::validate_custom_form_fields($post);

@@ -290,6 +290,7 @@ class Reports_Controller extends Main_Controller {
                         'demographics_district' => '',
                         'demographics_gender' => '',
                         'demographics_age' => '',
+                        'pinmoved' => '',
 		);
 		
                 $likert_questions = reports::fetch_likert_scale_questions();
