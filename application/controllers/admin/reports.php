@@ -1058,6 +1058,9 @@ class Reports_Controller extends Admin_Controller
 
                                 // personal information
                                 $report_csv .= ",first name,last name,email";
+
+                                // bucket for all comments
+                                $report_csv .= ',comments';
 				
 				$report_csv .= "\n";
 
@@ -1196,6 +1199,16 @@ class Reports_Controller extends Admin_Controller
                                         if (!$personal_reported) {
                                           $report_csv .= ',,,';
                                         }
+
+                                        $incident_comments = $db->query('SELECT comment_description FROM comment WHERE incident_id=' . $incident->id);
+                                        $comments = array();
+                                        foreach ($incident_comments as $c) {
+                                          if ($c->comment_description) {
+                                            $comments[] = str_replace('"', '""', $c->comment_description);
+                                          }
+                                        }
+                                        $comment_string = implode("\n", $comments);
+                                        $report_csv .= ',' . ($comment_string ? '"' . $comment_string . '"' : '');
 
 					$report_csv .= "\n";
 				}
