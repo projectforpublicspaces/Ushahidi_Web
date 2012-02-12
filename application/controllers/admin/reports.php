@@ -910,6 +910,9 @@ class Reports_Controller extends Admin_Controller
 	 */
 	function download()
 	{
+
+          $db = Database::instance();
+
 		// If user doesn't have access, redirect to dashboard
 		if ( ! admin::permissions($this->user, "reports_download"))
 		{
@@ -1041,9 +1044,35 @@ class Reports_Controller extends Admin_Controller
 				}
 				
 				$report_csv .= ",APPROVED,VERIFIED";
-				
+
+                                // always include new custom fields
+
+                                // likert scale questions
+                                $likert_questions = reports::fetch_likert_scale_questions();
+                                foreach ($likert_questions as $q) {
+                                  $report_csv .= ",likert_question_" . $q->id;
+                                }
+
+                                // demographics
+                                $report_csv .= ",age,male,district";
+
+                                // personal information
+                                $report_csv .= ",first name,last name,email";
 				
 				$report_csv .= "\n";
+
+                                // populate lookup maps for custom data to avoid having to join through queries
+                                $age_map = array();
+                                $ages = $db->query("SELECT id, age_range from demographics_age");
+                                foreach ($ages as $a) {
+                                  $age_map[$a->id] = $a->age_range;
+                                }
+                                
+                                $district_map = array();
+                                $districts = $db->query("SELECT id, district from demographics_district");
+                                foreach ($districts as $d) {
+                                  $district_map[$d->id] = $d->district;
+                                }
 
 				foreach ($incidents as $incident)
 				{
@@ -1113,7 +1142,61 @@ class Reports_Controller extends Admin_Controller
 					{
 						$report_csv .= ",NO";
 					}
-					
+
+                                        // custom information
+                                        
+                                        // likert responses
+                                        $likert_answers = $db->query('SELECT likert_question_id, likert_response_id FROM likert_incident_response WHERE incident_id=' . $incident->id);
+                                        $likert_answer_map = array();
+                                        foreach ($likert_answers as $a) {
+                                          $likert_answer_map[$a->likert_question_id] = $a->likert_response_id;
+                                        }
+                                        for ($i = 0; $i < count($likert_questions); $i++) {
+                                          $likert_response = isset($likert_answer_map[$i+1]) ? $likert_answer_map[$i+1] : "";
+                                          $report_csv .= "," . $likert_response;
+                                        }
+                                        
+                                        $demographics = $db->query('SELECT age_id, male, district_id FROM demographics_incident WHERE incident_id=' . $incident->id);
+                                        $demographics_reported = false;
+                                        foreach ($demographics as $d) {
+                                          $age = '';
+                                          $male = '';
+                                          $district = '';
+                                          if ($d->age_id) {
+                                            if (isset($age_map[$d->age_id])) {
+                                              $age = $age_map[$d->age_id];
+                                            }
+                                          }
+                                          if (isset($d->male)) {
+                                            $male = $d->male;
+                                          }
+                                          if ($d->district_id) {
+                                            if (isset($district_map[$d->district_id])) {
+                                              $district = $district_map[$d->district_id];
+                                            }
+                                          }
+                                          $report_csv .= "," . $age . "," . $male . "," . $district;
+                                          $demographics_reported = true;
+                                          break;
+                                        }
+                                        if (!$demographics_reported) {
+                                          $report_csv .= ",,,";
+                                        }
+
+                                        $personal_reported = false;
+                                        $personal = $db->query('SELECT person_first, person_last, person_email FROM incident_person WHERE incident_id=' . $incident->id);
+                                        foreach ($personal as $p) {
+                                          $first = isset($p->person_first) ? $p->person_first : "";
+                                          $last = isset($p->person_last) ? $p->person_last : "";
+                                          $email = isset($p->person_email) ? $p->person_email : "";
+                                          $report_csv .= "," . $first . "," . $last . "," . $email;
+                                          $personal_reported = true;
+                                          break;
+                                        }
+                                        if (!$personal_reported) {
+                                          $report_csv .= ',,,';
+                                        }
+
 					$report_csv .= "\n";
 				}
 
