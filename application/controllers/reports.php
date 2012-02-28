@@ -291,6 +291,8 @@ class Reports_Controller extends Main_Controller {
                         'demographics_gender' => '',
                         'demographics_age' => '',
                         'pinmoved' => '',
+                        'beratta' => '',
+                        'detta' => '',
 		);
 		
                 $likert_questions = reports::fetch_likert_scale_questions();
@@ -391,6 +393,8 @@ class Reports_Controller extends Main_Controller {
                                 reports::save_demographics($post, $incident,
                                                            $demographics_ages,
                                                            $demographics_districts);
+
+                                reports::save_lidingo($post, $incident);
 
 				url::redirect('reports/thanks');
 			}

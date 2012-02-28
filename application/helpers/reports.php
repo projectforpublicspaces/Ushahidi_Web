@@ -155,6 +155,9 @@ class reports_Core {
                 if (isset($post->pinmoved) && $post->pinmoved != '1') {
                   $post->add_error('pinmoved', 'required');
                 }
+
+                $post->add_rules('beratta','required');
+                $post->add_rules('detta','required');
 		
 		// Custom form fields validation
 		$errors = customforms::validate_custom_form_fields($post);
@@ -1039,6 +1042,15 @@ class reports_Core {
             $result = str_replace($month, $translation, $result);
           }
           return $result;
+        }
+
+        public function save_lidingo($post, $incident) {
+          $db = Database::instance();
+          $data = array('incident_id' => $incident->id,
+                        'beratta' => $post['beratta'],
+                        'detta' => $post['detta'],
+                        );
+          $db->insert('lidingo_question', $data);
         }
 }
 ?>
