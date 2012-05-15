@@ -597,6 +597,14 @@
 					gMap.getCenter(),null,null,null,null,"json");
 				gTimeline.playOrPause('raindrops');
 			});
+
+                        // select 1st category
+                        $('#category_switch').find('a').each(function() {
+                            if ($(this).find('.category-title').text() === 'Lighter Quick Cheaper') {
+                              $(this).click();
+                            }
+                        });
+
 		});
 		
 		/*		
