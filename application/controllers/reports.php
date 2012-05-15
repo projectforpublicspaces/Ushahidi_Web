@@ -459,11 +459,11 @@ class Reports_Controller extends Main_Controller {
 			//XXX: Hack to validate for no checkboxes checked
 			if (!isset($_POST['incident_category'])) {
 				$post->incident_category = "";
-				$post->add_error('incident_category', 'required');
+				/*$post->add_error('incident_category', 'required');*/
 			}
 			else
 			{
-				$post->add_rules('incident_category.*', 'required', 'numeric');
+				/*$post->add_rules('incident_category.*', 'required', 'numeric');*/
 			}
 
 			// Validate only the fields that are filled in

@@ -134,7 +134,7 @@
 	'filters' => 'Filters',
 	'find' => 'Find',
 	'find_location' => 'Find Location',
-	'first_name' => 'First Namey',
+	'first_name' => 'First Name',
 	'force_run_scheduler' => 'Force Run Scheduler',
 	'forgot_password' => 'Forgot your password?',
 	'form' => 'Form',

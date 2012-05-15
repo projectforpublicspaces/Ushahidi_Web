@@ -69,7 +69,7 @@ in <?php echo $submitted_neighborhood; ?>
 $custom_fieldid = Kohana::config('pps.custom_field_id');
 if (isset($disp_custom_fields[$custom_fieldid]) AND !empty($disp_custom_fields[$custom_fieldid])):
 ?>
-<h4>Because I want San Antonio to be...</h4>
+<h4>Because I want downtown to be...</h4>
 <h6><?php echo $disp_custom_fields[$custom_fieldid]; ?></h6>
 <?php endif; ?>
 
