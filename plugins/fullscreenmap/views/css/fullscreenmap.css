@@ -3,11 +3,11 @@ div.fullscreenmap-btn{
 	/*background-image:url(../images/window.png);*/
 	background-repeat:no-repeat;
 	background-position:5px;
-	background-color:#009ab6;
+	background-color:#fff;
 	font-weight:bold;
 	padding:5px 5px 5px 0px;
-	margin: 30px 0px 30px 0px;
-	line-height:16px;
+	margin: 8px 0px 8px 0px;
+	line-height:13px;
 	border:0px solid #ccc;
 		-moz-border-radius-topright:8px;
 	-khtml-border-radius-topright:8px;
@@ -20,8 +20,8 @@ div.fullscreenmap-btn{
 }
 div.fullscreenmap-btn a{
 	padding:0 5px 0 5px;
-	background-color:#009ab6;
-	color:#fff;
+	background-color:#fff;
+	color:#000;
 }
 div.fullscreenmap_cats{
 	width:293px;

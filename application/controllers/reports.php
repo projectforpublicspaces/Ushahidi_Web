@@ -79,7 +79,7 @@ class Reports_Controller extends Main_Controller {
                   foreach ($default_cat_search_query as $cat) {
                     $allowed_ids[] = $cat->id;
                   }
-                }
+        }
 
 		// Get location_ids if we are to filter by location
 		$location_ids = array();

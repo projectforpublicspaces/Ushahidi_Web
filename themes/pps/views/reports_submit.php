@@ -141,7 +141,9 @@
                            
                 
                 <div class="report_row">
-					<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?><br /><span class="example"><?php echo Kohana::lang('ui_main.reports_categories_subtext'); ?></span></h4>
+					<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?><br /><span class="example">
+                                          <?php //echo Kohana::lang('ui_main.reports_categories_subtext'); ?>
+</span></h4>
 					<div class="report_category" id="categories">
 						<?php
 						$selected_categories = array();
@@ -151,6 +153,7 @@
 ?>
 <ul>
 <?php
+ /*
 $user_categories = Kohana::config('pps.user_categories');
 foreach ($categories as $category)
 {
@@ -160,6 +163,14 @@ foreach ($categories as $category)
     {
       echo '<li>'.category::display_category_checkbox($child, $selected_categories, 'incident_category').'</li>';
     }
+  }
+}
+ */
+ // we display all categories
+foreach ($categories as $category)
+{
+  if ($category->category_visible) {
+    echo '<li>'.category::display_category_checkbox($category, $selected_categories, 'incident_category').'</li>';
   }
 }
 ?>
@@ -208,7 +219,9 @@ foreach ($categories as $category)
                 
 
 				<div class="report_optional">
-					<h4 style="font-size:150%; font-weight:bold; font-family: Helvetica, arial, serif;"><?php echo Kohana::lang('ui_main.reports_optional'); ?></h4><span class="subtext"><?php echo Kohana::lang('ui_main.reports_optional_subtext'); ?></span>
+					<h4 style="font-size:150%; font-weight:bold; font-family: Helvetica, arial, serif;"><?php echo Kohana::lang('ui_main.reports_optional'); ?></h4><span class="subtext">
+<?php //echo Kohana::lang('ui_main.reports_optional_subtext'); ?>
+</span>
 					<!-- News Fields -->
 				<div id="divNews" class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_news'); ?></h4>
@@ -325,7 +338,7 @@ foreach ($categories as $category)
 
 				</div>
                     <div class="report_row">
-							 <h4><?php echo Kohana::lang('ui_main.reports_first'); ?></h4>
+							 <h4><?php echo Kohana::lang('ui_main.reports_first'); ?><br /> <span class="example"> (Your first and last name will be public when your idea is published)</span></h4>
                              
 							 <?php print form::input('person_first', $form['person_first'], ' class="text long" ', 'value="text"'); ?>
 					</div>
@@ -333,13 +346,16 @@ foreach ($categories as $category)
 						<h4><?php echo Kohana::lang('ui_main.reports_last'); ?></h4>
 						<?php print form::input('person_last', $form['person_last'], ' class="text long"'); ?>
 					</div>
+                                        <?php if (false): ?>
                                         <div class="report_row">
                                                   <h4>Your Neighborhood <span style="margin-left: 2em" class="discreet">Example: Alta Vista</span></h4>
                                                   <?php print form::input('person_neighborhood', $form['person_neighborhood'], ' class="text long"'); ?>
                                         </div>
+                                        <?php endif; ?>
 					<div class="report_row">
 						<h4><?php echo Kohana::lang('ui_main.reports_email'); ?><br />
-                        <span class="example"><?php echo Kohana::lang('ui_main.reports_email_privacy'); ?></span></h4>
+                        <span class="example">(Your email will not be shown publicly)<?php // echo Kohana::lang('ui_main.reports_email_privacy'); ?>
+</span></h4>
 						<?php print form::input('person_email', $form['person_email'], ' class="text long"'); ?>
 					</div>
 					<?php
@@ -354,11 +370,15 @@ foreach ($categories as $category)
 				</div>
 			</div>
 			<div class="report_right sidebar-copy">
-                          <h5>Add your ideas to improve downtown San Antonio's places now through July!</h5>
-                          <h5>The Power of Ten:  A great place typically has at least 10 things to do in it; a great downtown has at least 10 great places.</h5>
-                          <h5>Tell us which downtown places matter most to you - the best, the worst, and the places that have the greatest opportunity. Tell us your ideas to improve them. Add as many places as you can. The results will add up to an agreement on the places we need to focus on.</h5>
-                          <h5>Share ideas. Browse ideas. Comment. Tell your friends. Let's Re-Imagine the Heart of San Antonio.</h5>
-			</div>
+		
+<h5>Lighter Quicker (LQC) is a DIY approach based on taking incremental steps, trying low-cost experiments, and tapping into local talents.</h5>
+
+<h5>Share your low cost, high impact suggestions for transforming an underutilized public space, submissions are open through June 17.</h5>
+
+<h5>Five finalist ideas will be voted on and the best LQC idea will receive funding to make it a reality.</h5>
+
+<h5>Share ideas. Browse ideas. Comment. Tell your friends.</h5>
+	</div>
 		</div>
 		<?php print form::close(); ?>
 		<!-- end report form block -->
