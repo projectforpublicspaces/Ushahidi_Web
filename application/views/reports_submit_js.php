@@ -83,7 +83,7 @@
 						required: true
 					},
 					"incident_category[]": {
-						required: true,
+						required: false,
 						minlength: 1
 					},
 					latitude: {
