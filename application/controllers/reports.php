@@ -307,6 +307,7 @@ class Reports_Controller extends Main_Controller {
                 }
                 $this->template->content->category_titles = $category_titles;
 
+                /*
                 $user_categories_cfg = Kohana::config('pps.user_categories');
                 $visible_category_titles = array();
                 foreach($user_categories_cfg as $visible_category_title)
@@ -330,8 +331,22 @@ class Reports_Controller extends Main_Controller {
                         $user_categories[] = $category;
                     }
                 }
+                */
+
+                $user_categories = ORM::factory('category')->where('parent_id != 0')->find_all();
+
                 $this->template->content->user_categories = $user_categories;
-                $this->template->content->selected_categories = $category_ids;
+                $selected_categories = array();
+                if ($category_ids_in) {
+                  $selected_categories = $category_ids;
+                } else {
+                  foreach ($user_categories as $cat) {
+                    if ($cat->category_title === "Lighter Quick Cheaper") {
+                      $selected_categories = array($cat->id);
+                    }
+                  }
+                }
+                $this->template->content->selected_categories = $selected_categories;
 
 		// Collect report stats
 		$this->template->content->report_stats = new View('reports_stats');
