@@ -338,9 +338,17 @@ class Reports_Controller extends Main_Controller {
                 }
                 */
 
-                $user_categories = ORM::factory('category')->where('parent_id != 0')->find_all();
+                $user_categories = ORM::factory('category')->find_all();
+                $displayedcats = array();
+                foreach ($user_categories as $c) {
+                    if ($c->category_title === "Lighter Quick Cheaper") {
+                        array_unshift($displayedcats, $c);
+                    } else {
+                        array_push($displayedcats, $c);
+                    }
+                }
 
-                $this->template->content->user_categories = $user_categories;
+                $this->template->content->user_categories = $displayedcats;
                 $selected_categories = array();
                 if ($category_ids_in) {
                   $selected_categories = $category_ids;
