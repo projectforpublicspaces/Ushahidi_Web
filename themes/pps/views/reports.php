@@ -16,14 +16,16 @@ if (!empty($category_titles))
 ?>
 <?php echo $pagination_stats; ?></h1>
 <form method="GET" action="<?php echo url::site('reports'); ?>">
-<ul>
-<span style="font-weight: bold; display:">Filter by</span>
+<div style="font-weight: bold; float: left; width: 65px;">Filter by</div>
+<div style="float: left; width: 650px;">
+<ul id="categories-list">
 <?php
 foreach ($user_categories as $visible_category)
   {
-          echo '<li style="list-style: none; display: inline; padding: 0 5px">'.category::display_category_checkbox($visible_category, $selected_categories, 'c').'</li>';
+          echo '<li style="list-style: none; float: left; padding: 0 5px; width: 200px; text-transform:uppercase;">'.category::display_category_checkbox($visible_category, $selected_categories, 'c').'</li>';
   }
 ?>
+</ul>
 <!--
 <span style="font-weight: bold; margin-left: 1em">Borough</span>
 <select name="b">
@@ -35,16 +37,30 @@ foreach ($user_categories as $visible_category)
    <option value="Staten Island" <?php if (isset($_GET['b']) AND $_GET['b'] == "Staten Island"): ?>selected="true"<?php endif; ?>>Staten Island</option>
 </select>
 -->
+<script>
+$('#categories-list input').each(function() {
+  var li = $(this).parent('li');
+  if ($(this).attr('disabled')) {
+    li.remove();
+  } else {
+    var elt = li[0];
+    var txtNode = elt.childNodes[1];
+    txtNode.nodeValue = ' ' + txtNode.nodeValue;
+  }
+});
+</script>
 
-<span style="font-weight: bold; margin-left: 1em">Sort on</span>
-<select name="sort">
+</div>
+<div style="float: left; width: 100px">
+<div style="font-weight: bold; margin-bottom: 1em">Sort By</div>
+<select name="sort" style="margin-bottom: 1em">
    <option value="date">Date</option>
    <option value="comments" <?php if (isset($_GET['sort']) AND $_GET['sort'] == "comments"): ?>selected="true"<?php endif; ?>>Comments</option>
 </select>
 <input type="submit" value="Apply" />
-</ul>
+</div>
 </form>
-			<div style="clear:both;"></div>
+			<div style="clear:both; height:10px"></div>
 			<div class="r_cat_tooltip"> <a href="#" class="r-3">2a. Structures a risque | Structures at risk</a> </div>
 
    
