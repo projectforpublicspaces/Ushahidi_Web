@@ -600,7 +600,7 @@
 
                         // select 1st category
                         $('#category_switch').find('a').each(function() {
-                            if ($(this).find('.category-title').text() === 'Lighter Quick Cheaper') {
+                            if ($(this).find('.category-title').text() === 'Lighter, Quicker, Cheaper') {
                               $(this).click();
                             }
                         });
