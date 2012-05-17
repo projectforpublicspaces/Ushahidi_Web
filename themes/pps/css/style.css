@@ -85,6 +85,11 @@ body{
     font-size: 14px;
 }
 
+.big-block .page_text p {
+font-size: 15px;
+line-height: 20px;
+}
+
 body#page{
     
   background: #333 url(../images/icon-bg.jpg) no-repeat fixed top center;

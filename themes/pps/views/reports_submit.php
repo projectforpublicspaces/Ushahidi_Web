@@ -139,7 +139,7 @@
 					?>
                             </div>
                            
-                
+                <!--
                 <div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?><br /><span class="example">
                                           <?php //echo Kohana::lang('ui_main.reports_categories_subtext'); ?>
@@ -176,7 +176,8 @@ foreach ($categories as $category)
 ?>
 </ul>
 					</div>
-				</div>
+				</div>-->
+
 				<?php
 				
 				// Action::report_form - Runs right after the report categories
