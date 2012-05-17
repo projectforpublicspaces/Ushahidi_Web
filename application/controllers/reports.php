@@ -338,7 +338,7 @@ class Reports_Controller extends Main_Controller {
                 }
                 */
 
-                $user_categories = ORM::factory('category')->find_all();
+                $user_categories = ORM::factory('category')->where('category_visible', 1)->find_all();
                 $displayedcats = array();
                 foreach ($user_categories as $c) {
                     if ($c->category_title === "Lighter Quick Cheaper") {
