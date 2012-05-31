@@ -77,9 +77,15 @@ class Reports_Controller extends Main_Controller {
 		} else {
                   $default_cat_search_query = ORM::factory('category')->where('category_title', 'Lighter Quick Cheaper')->find_all();
                   foreach ($default_cat_search_query as $cat) {
-                    $allowed_ids[] = $cat->id;
+                    $query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$cat->id.';';
+                    $query = $db->query($query);
+                    foreach ( $query as $items )
+                    {
+                      $allowed_ids[] = $items->incident_id;
+                    }
+                    //$allowed_ids[] = $cat->id;
                   }
-        }
+                }
 
 		// Get location_ids if we are to filter by location
 		$location_ids = array();
