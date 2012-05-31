@@ -224,10 +224,10 @@ class Json_Controller extends Template_Controller
             $_GET['ne'] : "0";
 
         $filter = "";
-        $filter .= ($start_date) ?
-            " AND i.incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
-        $filter .= ($end_date) ?
-            " AND i.incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
+        //$filter .= ($start_date) ?
+        //    " AND i.incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
+        //$filter .= ($end_date) ?
+        //    " AND i.incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
 
         if ($southwest AND $northeast)
         {
