@@ -1154,9 +1154,9 @@ class Reports_Controller extends Admin_Controller
                     if ($item == 3) {
                       $query_categories = ORM::factory('category')->find_all();
                       foreach ($query_categories as $query_category) {
-                        if ($query_category->parent_id !== 0) {
+                        //if ($query_category->parent_id !== 0) {
                           $categories[] = $query_category->category_title;
-                        }
+                        //}
                       }
                       asort($categories);
                       foreach ($categories as $category) {
